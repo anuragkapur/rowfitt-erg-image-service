@@ -1,39 +1,54 @@
 package com.beancrunch.rowfitt;
 
 import com.beancrunch.rowfitt.domain.Workout;
-import com.google.cloud.vision.v1.*;
-import com.google.protobuf.ByteString;
+import com.beancrunch.rowfitt.domain.WorkoutTextSummary;
+import com.beancrunch.rowfitt.domain.WorkoutType;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class GCPCloudVisionImageService implements ErgImageService {
 
-    public Workout getWorkoutFromImage(byte[] imageBinary) throws IOException {
-        ImageAnnotatorClient imageAnnotatorClient = ImageAnnotatorClient.create();
-        ByteString imageByteString = ByteString.copyFrom(imageBinary);
+    private GCPCloudVisionClient gcpCloudVisionClient;
 
-        // Builds the image annotation request
-        List<AnnotateImageRequest> requests = new ArrayList<>();
-        Image img = Image.newBuilder().setContent(imageByteString).build();
-        Feature feat = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
-        AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
-                                                                .addFeatures(feat)
-                                                                .setImage(img)
-                                                                .build();
-        requests.add(request);
+    public Workout getWorkoutFromImage(byte[] imageBinary, WorkoutType workoutType) throws IOException {
+        return this.gcpCloudVisionClient
+                .getTextFromImage(imageBinary)
+                .map(this::getWorkoutTextSummary)
+                .map(this::getWorkout)
+                .orElse(new Workout());
+    }
 
-        // Perform text detection
-        BatchAnnotateImagesResponse response = imageAnnotatorClient.batchAnnotateImages(requests);
-        List<AnnotateImageResponse> responses = response.getResponsesList();
-        for (AnnotateImageResponse res : responses) {
-            if (res.hasError()) {
-                System.out.printf("Error: %s\n", res.getError().getMessage());
+    private WorkoutTextSummary getWorkoutTextSummary(String workoutImageText) {
+        WorkoutTextSummary workoutTextSummary = new WorkoutTextSummary();
+        String[] lines = workoutImageText.split("\n");
+        for (int i = 0; i < lines.length; i++) {
+            if (lines[i].contains("time")) {
+                if (i+1 < lines.length)
+                    workoutTextSummary.setWorkoutMetricsText(lines[i+1]);
+                if (i > 0) {
+                    workoutTextSummary.setDate(lines[i-1]);
+                }
             }
-
-            System.out.println(res.getFullTextAnnotation().getText());
         }
-        return null;
+        return workoutTextSummary;
+    }
+
+    private Workout getWorkout(WorkoutTextSummary workoutTextSummary) {
+        Workout workout = new Workout();
+
+        DateFormat format = new SimpleDateFormat("MMM dd yyyy");
+        try {
+            workout.setDate(format.parse(workoutTextSummary.getDate()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return workout;
     }
 }
