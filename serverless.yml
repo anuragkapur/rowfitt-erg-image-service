@@ -1,0 +1,16 @@
+service: rowfitt-erg-image-service
+
+provider:
+  name: aws
+  runtime: java8
+
+package:
+  artifact: target/rowfitt-erg-image-service-1.0-SNAPSHOT.jar
+
+functions:
+  extractTextFromImage:
+    handler: com.beancrunch.rowfitt.AWSLambdaHandler
+    events:
+      - http:
+          path: workout
+          method: post
