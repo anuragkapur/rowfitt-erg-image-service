@@ -7,5 +7,5 @@ import java.io.IOException;
 
 public interface ErgImageService {
 
-    Workout getWorkoutFromImage(byte[] imageBinary, WorkoutType workoutType) throws IOException;
+    Workout getWorkoutFromImage(byte[] imageBinary) throws IOException;
 }
