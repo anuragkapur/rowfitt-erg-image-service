@@ -1,5 +1,6 @@
-package com.beancrunch.rowfitt;
+package com.beancrunch.rowfitt.gcp;
 
+import com.beancrunch.rowfitt.ErgImageService;
 import com.beancrunch.rowfitt.domain.Workout;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
