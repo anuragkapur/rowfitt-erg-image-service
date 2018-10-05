@@ -1,5 +1,6 @@
-package com.beancrunch.rowfitt;
+package com.beancrunch.rowfitt.gcp;
 
+import com.beancrunch.rowfitt.ErgImageService;
 import com.beancrunch.rowfitt.domain.Workout;
 import com.beancrunch.rowfitt.domain.WorkoutTextSummary;
 import lombok.AllArgsConstructor;
@@ -17,11 +18,13 @@ public class GCPCloudVisionImageService implements ErgImageService {
     private GCPCloudVisionClient gcpCloudVisionClient;
 
     public Workout getWorkoutFromImage(byte[] imageBinary) throws IOException {
-        return this.gcpCloudVisionClient
-                .getTextFromImage(imageBinary)
-                .map(this::getWorkoutTextSummary)
-                .map(this::getWorkout)
-                .orElse(new Workout());
+        // todo: implement
+        return new Workout();
+//        return this.gcpCloudVisionClient
+//                .getTextFromImage(imageBinary)
+//                .map(this::getWorkoutTextSummary)
+//                .map(this::getWorkout)
+//                .orElse(new Workout());
     }
 
     private WorkoutTextSummary getWorkoutTextSummary(String workoutImageText) {

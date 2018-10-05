@@ -9,7 +9,7 @@ package:
 
 functions:
   extractTextFromImage:
-    handler: com.beancrunch.rowfitt.AWSLambdaHandler
+    handler: com.beancrunch.rowfitt.aws.AWSAPIGatewayLambdaHandler
     events:
       - http:
           path: workout

@@ -1,4 +1,4 @@
-package com.beancrunch.rowfitt;
+package com.beancrunch.rowfitt.gcp;
 
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
