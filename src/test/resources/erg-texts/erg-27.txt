@@ -1,0 +1,15 @@
+OConcept 2.
+PM5
+view Detail
+2x15:00/5:00r
+Mar 23 2018
+Total Time
+40:00.0
+time meter /500m T1쓸
+30:00,0 7351 2:02.4 20
+15:00,0 3676 2:02.4 20
+15:00.0 3674 2:02.4 20
+r31
+Units
+Display
+Menu

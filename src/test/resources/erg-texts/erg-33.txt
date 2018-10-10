@@ -1,0 +1,15 @@
+OConcept 2.
+19:00(4:00r
+lan 13 2018
+TotalTime:
+46:00,0
+|
+time meter /500m m
+38:00.0 9953 1:54,5 22
+19:00.0 4922 1:55,8 22
+19:00.0 5032 1:53,2 23
+264
+CHANGE
+UNITS
+CHANGE
+DISPLAY
