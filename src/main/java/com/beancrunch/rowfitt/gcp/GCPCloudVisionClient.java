@@ -11,25 +11,29 @@ import java.util.Optional;
 class GCPCloudVisionClient {
 
     Optional<String> getTextFromImage(byte[] imageBinary) throws IOException {
-        ImageAnnotatorClient imageAnnotatorClient = ImageAnnotatorClient.create();
-        ByteString imageByteString = ByteString.copyFrom(imageBinary);
 
-        // Builds the image annotation request
-        List<AnnotateImageRequest> requests = new ArrayList<>();
-        Image img = Image.newBuilder().setContent(imageByteString).build();
-        Feature feat = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
-        AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
-                .addFeatures(feat)
-                .setImage(img)
-                .build();
-        requests.add(request);
+        try (ImageAnnotatorClient imageAnnotatorClient = ImageAnnotatorClient.create()) {
+            ByteString imageByteString = ByteString.copyFrom(imageBinary);
 
-        // Perform text detection
-        BatchAnnotateImagesResponse response = imageAnnotatorClient.batchAnnotateImages(requests);
-        return response
-                .getResponsesList()
-                .stream()
-                .findFirst()
-                .map(r -> r.getFullTextAnnotation().getText());
+            // Builds the image annotation request
+            List<AnnotateImageRequest> requests = new ArrayList<>();
+            Image img = Image.newBuilder().setContent(imageByteString).build();
+            Feature feat = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
+            AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
+                    .addFeatures(feat)
+                    .setImage(img)
+                    .build();
+            requests.add(request);
+
+            // Perform text detection
+            BatchAnnotateImagesResponse response = imageAnnotatorClient.batchAnnotateImages(requests);
+            Optional<String> textOptional = response
+                    .getResponsesList()
+                    .stream()
+                    .findFirst()
+                    .map(r -> r.getFullTextAnnotation().getText());
+            imageAnnotatorClient.shutdown();
+            return textOptional;
+        }
     }
 }
