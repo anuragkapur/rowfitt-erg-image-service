@@ -56,7 +56,7 @@ class GCPCloudVisionImageServiceTest {
     }
 
     private void extractWorkoutsFromText() throws Exception {
-        Optional<URL> ergTextsDirUrl = Optional.ofNullable(getClass().getClassLoader().getResource("temp-out"));
+        Optional<URL> ergTextsDirUrl = Optional.ofNullable(getClass().getClassLoader().getResource("erg-texts"));
         ergTextsDirUrl
                 .map(url -> getChildPathStream(get(url.getPath())))
                 .orElseThrow(() -> new Exception("No files found to process"))
