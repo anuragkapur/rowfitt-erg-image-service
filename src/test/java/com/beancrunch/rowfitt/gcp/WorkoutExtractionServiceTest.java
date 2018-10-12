@@ -1,6 +1,9 @@
 package com.beancrunch.rowfitt.gcp;
 
 import com.beancrunch.rowfitt.domain.Workout;
+import com.beancrunch.rowfitt.text.FunctionalWorkoutExtractionService;
+import com.beancrunch.rowfitt.text.ImperativeWorkoutExtractionService;
+import com.beancrunch.rowfitt.text.WorkoutExtractionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +26,7 @@ import static java.nio.file.Paths.get;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-class GCPCloudVisionImageServiceTest {
+class WorkoutExtractionServiceTest {
 
     private static final String expectedWorkoutsDir =
             "/Users/anuragkapur/tech-stuff/workspace/beancrunch/rowfitt-erg-image-service/src/test/resources/erg" +
@@ -31,14 +34,14 @@ class GCPCloudVisionImageServiceTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    private static GCPCloudVisionImageService gcpCloudVisionImageService = new GCPCloudVisionImageService();
+    private static WorkoutExtractionService workoutExtractionService = new FunctionalWorkoutExtractionService();
 
     private static List<ExpectedActualPair> pairs = new ArrayList<>();
 
     @BeforeAll
     static void setup() {
         try {
-            new GCPCloudVisionImageServiceTest().extractWorkoutsFromText();
+            new WorkoutExtractionServiceTest().extractWorkoutsFromText();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,7 +59,7 @@ class GCPCloudVisionImageServiceTest {
     }
 
     private void extractWorkoutsFromText() throws Exception {
-        Optional<URL> ergTextsDirUrl = Optional.ofNullable(getClass().getClassLoader().getResource("erg-texts"));
+        Optional<URL> ergTextsDirUrl = Optional.ofNullable(getClass().getClassLoader().getResource("temp-erg-texts"));
         ergTextsDirUrl
                 .map(url -> getChildPathStream(get(url.getPath())))
                 .orElseThrow(() -> new Exception("No files found to process"))
@@ -76,7 +79,7 @@ class GCPCloudVisionImageServiceTest {
         try {
             String fileName = path.getFileName().toString();
             String lines = new String(Files.readAllBytes(path));
-            Workout actual = gcpCloudVisionImageService.getWorkout(lines);
+            Workout actual = workoutExtractionService.getWorkout(lines);
             Workout expected = getExpectedWorkout(path);
             addPairs(fileName, actual, expected);
         } catch (IOException e) {
