@@ -32,4 +32,48 @@ public class Workout {
     public String toJsonString() throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(this);
     }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public void setTimeHh(int timeHh) {
+        this.timeHh = timeHh;
+    }
+
+    public void setTimeMm(int timeMm) {
+        this.timeMm = timeMm;
+    }
+
+    public void setTimeSss(float timeSss) {
+        this.timeSss = timeSss;
+    }
+
+    public void setSplitMm(int splitMm) {
+        this.splitMm = splitMm;
+    }
+
+    public void setSplitSss(float splitSss) {
+        this.splitSss = splitSss;
+    }
+
+    public void setStrokeRate(int strokeRate) {
+        this.strokeRate = strokeRate;
+    }
+
+    public void setHeartRate(int heartRate) {
+        this.heartRate = heartRate;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setWorkoutType(String workoutType) {
+        this.workoutType = workoutType;
+    }
 }
