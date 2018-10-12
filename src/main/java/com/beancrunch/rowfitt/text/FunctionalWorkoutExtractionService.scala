@@ -44,7 +44,7 @@ class FunctionalWorkoutExtractionService extends WorkoutExtractionService {
       case (timePattern(_, splitMm, splitSss), "split") =>
         workout.setSplitMm(Try(splitMm.toInt).getOrElse(0))
         workout.setSplitSss(Try(splitSss.toFloat).getOrElse(0))
-      case (_, _) => println("Failed to extract " + time + " :: " + timeOrSplit)
+      case (_, _) =>
     }
   }
 
@@ -61,7 +61,6 @@ class FunctionalWorkoutExtractionService extends WorkoutExtractionService {
   private def extractWorkout(lines: List[String], workout: Workout): Unit = {
     lines match {
       case Nil =>
-        println("Finished extracting")
       case head :: neck :: body if neck.contains("time") =>
         setWorkoutDate(head, workout)
         setWorkoutKeyDetails(body.head, workout)
