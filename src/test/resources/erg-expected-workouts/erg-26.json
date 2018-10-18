@@ -1,0 +1,14 @@
+{
+  "workoutId": "",
+  "date": "2018-2-18",
+  "distance": 6000,
+  "timeHh": 0,
+  "timeMm": 22,
+  "timeSss": 23.0,
+  "splitMm": 1,
+  "splitSss": 51.9,
+  "strokeRate": 27,
+  "heartRate": -1,
+  "userId": null,
+  "workoutType": "6x1000m/4:00r"
+}
