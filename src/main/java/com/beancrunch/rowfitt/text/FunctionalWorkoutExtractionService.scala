@@ -5,6 +5,7 @@ import java.util.TimeZone
 
 import com.beancrunch.rowfitt.domain.TimeMetric.TimeMetric
 import com.beancrunch.rowfitt.domain.{TimeMetric, Workout}
+import me.xdrop.fuzzywuzzy.FuzzySearch
 
 import scala.annotation.tailrec
 import scala.util.Try
@@ -62,11 +63,11 @@ class FunctionalWorkoutExtractionService extends WorkoutExtractionService {
   private def extractWorkout(lines: List[String], workout: Workout): Unit = {
     lines match {
       case Nil =>
-      case head :: neck :: body if neck.contains("time") =>
+      case head :: neck :: body if FuzzySearch.partialRatio(neck, "time meter") > 75 =>
         setWorkoutDate(head, workout)
         setWorkoutKeyDetails(body.head, workout)
         extractWorkout(lines.tail, workout)
-      case _ :: neck :: body if neck.contains("Detail") =>
+      case _ :: neck :: body if FuzzySearch.partialRatio(neck, "View Detail") > 75 =>
         setWorkoutType(body.head, workout)
         extractWorkout(lines.tail, workout)
       case _ =>

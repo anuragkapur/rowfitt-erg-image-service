@@ -59,7 +59,7 @@ class WorkoutExtractionServiceTest {
     }
 
     private void extractWorkoutsFromText() throws Exception {
-        Optional<URL> ergTextsDirUrl = Optional.ofNullable(getClass().getClassLoader().getResource("temp-erg-texts"));
+        Optional<URL> ergTextsDirUrl = Optional.ofNullable(getClass().getClassLoader().getResource("erg-texts"));
         ergTextsDirUrl
                 .map(url -> getChildPathStream(get(url.getPath())))
                 .orElseThrow(() -> new Exception("No files found to process"))
