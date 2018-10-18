@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class GCPCloudVisionClientTest {
+public class GCPCloudVisionClientTestDataGenerator {
 
     private static final String ergTextDir = "/Users/anuragkapur/tech-stuff/workspace/beancrunch/" +
             "rowfitt-erg-image-service/src/test/resources/erg-texts";
@@ -30,7 +30,7 @@ public class GCPCloudVisionClientTest {
         Files
                 .list(path)
                 .peek(System.out::println)
-                .forEach(GCPCloudVisionClientTest::extractTextAndWriteToFile);
+                .forEach(GCPCloudVisionClientTestDataGenerator::extractTextAndWriteToFile);
     }
 
     private void cleanupOutputDirectory() throws IOException {
@@ -42,8 +42,8 @@ public class GCPCloudVisionClientTest {
     }
 
     public static void main(String[] args) throws IOException {
-        GCPCloudVisionClientTest gcpCloudVisionClientTest = new GCPCloudVisionClientTest();
-        gcpCloudVisionClientTest.cleanupOutputDirectory();
-        gcpCloudVisionClientTest.writeTestForAllFiles();
+        GCPCloudVisionClientTestDataGenerator gcpCloudVisionClientTestDataGenerator = new GCPCloudVisionClientTestDataGenerator();
+        gcpCloudVisionClientTestDataGenerator.cleanupOutputDirectory();
+        gcpCloudVisionClientTestDataGenerator.writeTestForAllFiles();
     }
 }
