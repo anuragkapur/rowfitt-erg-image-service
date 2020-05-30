@@ -1,6 +1,9 @@
 package com.beancrunch.rowfitt.text;
 
 import com.beancrunch.rowfitt.domain.Workout;
+import com.beancrunch.rowfitt.text.handler.FuzzyMatchDateMonthHandler;
+import com.beancrunch.rowfitt.text.handler.TrimSpacesHandler;
+import com.beancrunch.rowfitt.text.handler.WorkoutTextHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

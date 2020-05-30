@@ -1,10 +1,8 @@
 package com.beancrunch.rowfitt.text
 
-import java.text.SimpleDateFormat
-import java.util.TimeZone
-
 import com.beancrunch.rowfitt.domain.TimeMetric.TimeMetric
 import com.beancrunch.rowfitt.domain.{TimeMetric, Workout}
+import com.beancrunch.rowfitt.text.handler.{DateParseHandler, FuzzyMatchDateMonthHandler, TrimSpacesHandler}
 import me.xdrop.fuzzywuzzy.FuzzySearch
 
 import scala.annotation.tailrec
@@ -18,12 +16,13 @@ class FunctionalWorkoutExtractionService extends WorkoutExtractionService {
     workout
   }
 
-  def setWorkoutDate(text: String, workout: Workout): Unit = {
-    println(text)
-    val dateFormat = new SimpleDateFormat("MMM dd yyyy")
-    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"))
-    workout.setDate(Try(dateFormat.parse(text)).getOrElse(null))
-  }
+def setWorkoutDate(text: String, workout: Workout): Unit = {
+  val workoutTextHandler = new TrimSpacesHandler()
+  workoutTextHandler
+    .setSuccessor(new FuzzyMatchDateMonthHandler())
+    .setSuccessor(new DateParseHandler())
+  workoutTextHandler.handleTextInChain(text, workout)
+}
 
   def setWorkoutKeyDetails(text: String, workout: Workout): Unit = {
     val tokens = text.split("\\s")

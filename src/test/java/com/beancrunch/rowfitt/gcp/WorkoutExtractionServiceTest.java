@@ -2,7 +2,6 @@ package com.beancrunch.rowfitt.gcp;
 
 import com.beancrunch.rowfitt.domain.Workout;
 import com.beancrunch.rowfitt.text.FunctionalWorkoutExtractionService;
-import com.beancrunch.rowfitt.text.ImperativeWorkoutExtractionService;
 import com.beancrunch.rowfitt.text.WorkoutExtractionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
