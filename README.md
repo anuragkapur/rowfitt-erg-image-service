@@ -14,3 +14,8 @@ Translates [erg workout images](/src/test/resources/erg-images) to structures JS
 ```bash
 mvn clean install
 ```
+
+## Deploy
+```
+sls deploy --aws-profile <aws_profile_name>
+```
